@@ -5,10 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +25,15 @@ import com.example.pencatatanpenduduk.Helpers.DBHelper;
 import com.example.pencatatanpenduduk.model.Penduduk;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHolder> {
 
     ArrayList<Penduduk> penduduks;
+
+
     DBHelper dbHelper;
     private Context context;
     Bundle bundle = new Bundle();
@@ -37,6 +43,8 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
         this.penduduks = penduduks;
 
     }
+
+
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
@@ -78,7 +86,7 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
     public void onBindViewHolder(@NonNull PendudukAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.nama_lengkap.setText(penduduks.get(position).getNama_lengkap());
         holder.tanggal_lahir.setText(penduduks.get(position).getTanggal_lahir());
-        holder.alamat.setText(penduduks.get(position).getAlamat().length() > 30 ? penduduks.get(position).getAlamat().substring(0,30) + "...." : penduduks.get(position).getAlamat() );
+        holder.alamat.setText(penduduks.get(position).getAlamat().length() > 27 ? penduduks.get(position).getAlamat().substring(0,27) + "...." : penduduks.get(position).getAlamat() );
         if (penduduks.get(position).getFoto() != null){
             Uri uri = Uri.parse(penduduks.get(position).getFoto());
             holder.profileImage.setImageURI(uri);
@@ -109,6 +117,8 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
         dbHelper.deleteData(penduduks.get(position).get_id());
         penduduks.remove(position);
         notifyDataSetChanged();
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, penduduks.size());
     }
 
     public void editItem(int position)
@@ -137,11 +147,11 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
         context.startActivity(intent);
     }
 
-
-    public void filteredList(ArrayList<Penduduk> filteredList){
-        penduduks= filteredList;
+    public  void filteredList(ArrayList<Penduduk> filtered){
+        penduduks = filtered;
         notifyDataSetChanged();
     }
+
 
 }
 

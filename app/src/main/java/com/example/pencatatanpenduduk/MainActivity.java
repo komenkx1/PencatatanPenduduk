@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     PendudukAdapter pendudukAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
     ArrayList<Penduduk> penduduks;
+    ArrayList<Penduduk> penduduksCopy;
     EditText search;
     String newText;
 
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         recylerViewLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(recylerViewLayoutManager);
         penduduks = new ArrayList<Penduduk>();
+
+        penduduksCopy = new ArrayList<>(penduduks);
 
         search = findViewById(R.id.searchEditText);
 
@@ -94,29 +97,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //search filter
-    private  void  filter(String newText){
-        ArrayList<Penduduk> filteredList =new ArrayList<>();
-        for (Penduduk item : penduduks){
-            if (item.getNama_lengkap().toLowerCase().contains(newText.toLowerCase())){
-                filteredList.add(item);
+    private  void filter(String newText){
+        newText =   newText.toLowerCase();
+        ArrayList<Penduduk> newPenduduk = new ArrayList<>();
+
+        for (Penduduk penduduk : penduduks){
+            String name = penduduk.getNama_lengkap().toLowerCase();
+            if (name.contains(newText)){
+                newPenduduk.add(penduduk);
             }
         }
-        pendudukAdapter.filteredList(filteredList);
+
+        pendudukAdapter.filteredList(newPenduduk);
+        pendudukAdapter.notifyDataSetChanged();
     }
 
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Toast.makeText(this, "app Terpause", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Toast.makeText(this, "app Ter-resume", Toast.LENGTH_SHORT).show();
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        Toast.makeText(this, "app Terpause", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Toast.makeText(this, "app Ter-resume", Toast.LENGTH_SHORT).show();
+//    }
 
     //floating menu
     @Override
@@ -177,7 +184,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 pendudukAdapter.removeItem(item.getGroupId());
-                                Snackbar.make(findViewById(R.id.coordinator),"Data Telah DIhapus", Snackbar.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Data Dihapus", Toast.LENGTH_SHORT).show();
+                                MainActivity.this.recreate();
                             }
                         })
                         .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
