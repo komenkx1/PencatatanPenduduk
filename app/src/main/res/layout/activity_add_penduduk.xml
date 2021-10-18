@@ -88,7 +88,7 @@
                     android:inputType="text"
                     android:padding="15dp"
                     android:textSize="14dp"
-                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "/>
+                    android:digits=".,'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "/>
 
                 <TextView
                     android:layout_width="wrap_content"

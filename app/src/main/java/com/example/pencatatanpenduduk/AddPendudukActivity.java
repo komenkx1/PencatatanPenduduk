@@ -193,8 +193,6 @@ public class AddPendudukActivity extends AppCompatActivity implements SeekBar.On
             @Override
             public void onClick(View view) {
 
-
-
                 DatePickerDialog dialog = new DatePickerDialog(AddPendudukActivity.this,
                         android.R.style.Theme_Holo_Dialog_MinWidth,
                         mDateSetListener,
@@ -209,6 +207,8 @@ public class AddPendudukActivity extends AppCompatActivity implements SeekBar.On
                 //set edittext value
                 String date =  day + " " + arrMonth[month] + " " + year;
                 mDisplayDate.setText(date);
+                Log.d("tetDate",mDisplayDate.toString());
+                Log.d("tetDate",nama_lengkap.toString());
             }
         };
 
@@ -226,9 +226,7 @@ public class AddPendudukActivity extends AppCompatActivity implements SeekBar.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        MenuItem menuItem2 = menu.findItem(R.id.menu_two);
         MenuItem menuItem3 = menu.findItem(R.id.menu_add);
-        menuItem2.setVisible(false);
         menuItem3.setVisible(false);
 
         return super.onCreateOptionsMenu(menu);
@@ -417,7 +415,7 @@ public class AddPendudukActivity extends AppCompatActivity implements SeekBar.On
             //intent
             intent.putExtra("name", nama_lengkap.getText().toString());
             intent.putExtra("alamat", alamat.getText().toString());
-            intent.putExtra("tanggal_lahir", mDisplayDate.getText().toString());
+            intent.putExtra("tanggalLahir", mDisplayDate.getText().toString());
             intent.putExtra("nomor_telepon", nomorTlp.getText().toString());
             intent.putExtra("gaji", String.valueOf(seekBar.getProgress()));
             intent.putExtra("agama", radioButton.getText().toString());

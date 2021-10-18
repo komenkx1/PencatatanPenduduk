@@ -14,7 +14,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public  static final String database_name = "db_penduduk";
     public  static final String table_name = "tb_penduduk";
-
     public  static final String row_id = "_id";
     public  static final String row_namaLengkap = "nama_lengkap";
     public  static final String row_alamat = "alamat";

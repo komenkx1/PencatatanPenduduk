@@ -31,13 +31,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    TextView nama, alamat, tanggalLahir, noTelp, gaji, agama, hobi, shortName, tglTercatat,jenisKelamin;
+    private TextView nama, alamat, tanggalLahir, noTelp, gaji, agama, hobi, shortName, tglTercatat,jenisKelamin;
     private ImageView imageView;
     private long id;
     private  Bundle bundle;
     private DBHelper dbHelper;
-    Locale localeID = new Locale("in", "ID");
-    NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+    private Locale localeID = new Locale("in", "ID");
+    private NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+
     @SuppressLint("Range")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class ProfileActivity extends AppCompatActivity {
                 String [] namaDepan = cursor.getString(cursor.getColumnIndex(DBHelper.row_namaLengkap)).split(" ");
                 shortName.setText( namaDepan.length > 1 ? namaDepan[0]+" "+namaDepan[1] : namaDepan[0]);
                 nama.setText( cursor.getString(cursor.getColumnIndex(DBHelper.row_namaLengkap)));
+                tanggalLahir.setText(cursor.getString(cursor.getColumnIndex(DBHelper.row_tanggaLahir)));
                 alamat.setText(cursor.getString(cursor.getColumnIndex(DBHelper.row_alamat)));
                 gaji.setText(formatRupiah.format((double) Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBHelper.row_gaji)))));
                 hobi.setText(cursor.getString(cursor.getColumnIndex(DBHelper.row_hobi)));
@@ -141,9 +143,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        MenuItem menuItem2 = menu.findItem(R.id.menu_two);
         MenuItem menuItem3 = menu.findItem(R.id.menu_add);
-        menuItem2.setVisible(false);
         menuItem3.setVisible(false);
 
         return super.onCreateOptionsMenu(menu);

@@ -11,7 +11,7 @@ public class Penduduk {
         this.alamat = alamat;
         this.tanggalLahir = tanggalLahir;
         this.tanggalTercatat = tanggalTercatat;
-        jenisKelamin = jenisKelamin;
+        this.jenisKelamin = jenisKelamin;
         this.nomorTlp = nomorTlp;
         this.gaji = gaji;
         this.agama = agama;

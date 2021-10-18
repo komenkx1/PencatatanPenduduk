@@ -13,13 +13,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -37,15 +40,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    PendudukAdapter pendudukAdapter;
-    RecyclerView.LayoutManager recylerViewLayoutManager;
-    ArrayList<Penduduk> penduduks;
-    ArrayList<Penduduk> penduduksCopy;
-    EditText search;
-    TextView searchNoDatas;
-    String newText;
-    boolean isSearch = false;
+    private RecyclerView recyclerView;
+    private PendudukAdapter pendudukAdapter;
+    private RecyclerView.LayoutManager recylerViewLayoutManager;
+    private ArrayList<Penduduk> penduduks;
+    private ArrayList<Penduduk> penduduksCopy;
+    private EditText search;
+    private TextView searchNoDatas;
+    private boolean isSearch = false;
 
 
     @Override
@@ -118,8 +120,27 @@ public class MainActivity extends AppCompatActivity {
         pendudukAdapter.notifyDataSetChanged();
     }
 
+    //clearfocus Edittext on touch outside
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if ( v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)ev.getRawX(), (int)ev.getRawY())) {
 
-//    @Override
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+
+    //    @Override
 //    protected void onPause() {
 //        super.onPause();
 //        Toast.makeText(this, "app Terpause", Toast.LENGTH_SHORT).show();
@@ -135,24 +156,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-
-        MenuItem menuItem = menu.findItem(R.id.menu_two);
-        View view = MenuItemCompat.getActionView(menuItem);
-
-        CircleImageView profileImage = view.findViewById(R.id.toolbar_profile_image);
-
-        Glide
-                .with(this)
-                .load("https://images.unsplash.com/photo-1478070531059-3db579c041d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80")
-                .into(profileImage);
-
-        profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"Profile Clicked",Toast.LENGTH_SHORT).show();
-            }
-        });
-
         return super.onCreateOptionsMenu(menu);
     }
 

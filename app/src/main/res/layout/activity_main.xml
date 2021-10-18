@@ -67,6 +67,8 @@
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/poppins_regular"
                 android:hint="Search"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
                 android:inputType="text"
                 android:lines="1"
                 android:minHeight="48dp" />
