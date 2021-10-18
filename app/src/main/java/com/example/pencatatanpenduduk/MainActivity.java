@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -42,28 +43,29 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Penduduk> penduduks;
     ArrayList<Penduduk> penduduksCopy;
     EditText search;
+    TextView searchNoDatas;
     String newText;
+    boolean isSearch = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         recyclerView = findViewById(R.id.listPenduduk);
         recylerViewLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(recylerViewLayoutManager);
         penduduks = new ArrayList<Penduduk>();
-
+        searchNoDatas = findViewById(R.id.searchNoData);
         penduduksCopy = new ArrayList<>(penduduks);
 
         search = findViewById(R.id.searchEditText);
 
         //get all data sqlite
         Cursor cursor = new DBHelper(this).allData();
-
         while (cursor.moveToNext()){
             Penduduk obj = new Penduduk(cursor.getInt(0),
                     cursor.getString(1), cursor.getString(2),
@@ -102,9 +104,13 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Penduduk> newPenduduk = new ArrayList<>();
 
         for (Penduduk penduduk : penduduks){
-            String name = penduduk.getNama_lengkap().toLowerCase();
+            String name = penduduk.getnamaLengkap().toLowerCase();
             if (name.contains(newText)){
                 newPenduduk.add(penduduk);
+                isSearch = true;
+            }else{
+                isSearch = false;
+                searchNoDatas.setVisibility(View.VISIBLE);
             }
         }
 
@@ -157,16 +163,18 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, AddPendudukActivity.class);
                 startActivity(intent);
                 break;
-            //When we use layout for menu then this case will not work
-            case R.id.menu_two:
-                Toast.makeText(MainActivity.this,"Menu Two Clicked",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.login_menu:
-                Toast.makeText(MainActivity.this,"Menu Three Clicked",Toast.LENGTH_SHORT).show();
+            case R.id.about:
+                new AlertDialog.Builder(this)
+                        .setTitle("About")
+                        .setMessage("Nama : I Komang Wahyu Hadi Permana \n"+"Nim : 1905551010 \n"+"Judul Aplikasi : Pencatatan Penduduk")
+                        .setPositiveButton("Tutup", null)
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     //ketika menuContext di tekan
     @Override
@@ -185,7 +193,11 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 pendudukAdapter.removeItem(item.getGroupId());
                                 Toast.makeText(MainActivity.this, "Data Dihapus", Toast.LENGTH_SHORT).show();
-                                MainActivity.this.recreate();
+                                if (isSearch){
+                                    overridePendingTransition( 0, 0);
+                                    MainActivity.this.recreate();
+                                    overridePendingTransition( 0, 0);
+                                }
                             }
                         })
                         .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {

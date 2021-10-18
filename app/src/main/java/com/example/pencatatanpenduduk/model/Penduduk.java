@@ -2,16 +2,16 @@ package com.example.pencatatanpenduduk.model;
 
 public class Penduduk {
 
-    String nama_lengkap, alamat, tanggal_lahir, tanggal_tercatat, Jenis_kelamin,nomorTlp, gaji, agama, hobi, foto;
+    String namaLengkap, alamat, tanggalLahir, tanggalTercatat, jenisKelamin,nomorTlp, gaji, agama, hobi, foto;
     int _id;
 
-    public Penduduk(int _id,String nama_lengkap, String alamat, String tanggal_lahir, String tanggal_tercatat, String jenis_kelamin, String nomorTlp, String gaji, String agama, String hobi, String foto) {
+    public Penduduk(int _id,String namaLengkap, String alamat, String tanggalLahir, String tanggalTercatat, String jenisKelamin, String nomorTlp, String gaji, String agama, String hobi, String foto) {
         this._id = _id;
-        this.nama_lengkap = nama_lengkap;
+        this.namaLengkap = namaLengkap;
         this.alamat = alamat;
-        this.tanggal_lahir = tanggal_lahir;
-        this.tanggal_tercatat = tanggal_tercatat;
-        Jenis_kelamin = jenis_kelamin;
+        this.tanggalLahir = tanggalLahir;
+        this.tanggalTercatat = tanggalTercatat;
+        jenisKelamin = jenisKelamin;
         this.nomorTlp = nomorTlp;
         this.gaji = gaji;
         this.agama = agama;
@@ -28,12 +28,12 @@ public class Penduduk {
         this._id = _id;
     }
 
-    public String getNama_lengkap() {
-        return nama_lengkap;
+    public String getnamaLengkap() {
+        return namaLengkap;
     }
 
-    public void setNama_lengkap(String nama_lengkap) {
-        this.nama_lengkap = nama_lengkap;
+    public void setnamaLengkap(String namaLengkap) {
+        this.namaLengkap = namaLengkap;
     }
 
     public String getAlamat() {
@@ -44,28 +44,28 @@ public class Penduduk {
         this.alamat = alamat;
     }
 
-    public String getTanggal_lahir() {
-        return tanggal_lahir;
+    public String gettanggalLahir() {
+        return tanggalLahir;
     }
 
-    public void setTanggal_lahir(String tanggal_lahir) {
-        this.tanggal_lahir = tanggal_lahir;
+    public void settanggalLahir(String tanggalLahir) {
+        this.tanggalLahir = tanggalLahir;
     }
 
-    public String getTanggal_tercatat() {
-        return tanggal_tercatat;
+    public String gettanggalTercatat() {
+        return tanggalTercatat;
     }
 
-    public void setTanggal_tercatat(String tanggal_tercatat) {
-        this.tanggal_tercatat = tanggal_tercatat;
+    public void settanggalTercatat(String tanggalTercatat) {
+        this.tanggalTercatat = tanggalTercatat;
     }
 
-    public String getJenis_kelamin() {
-        return Jenis_kelamin;
+    public String getjenisKelamin() {
+        return jenisKelamin;
     }
 
-    public void setJenis_kelamin(String jenis_kelamin) {
-        Jenis_kelamin = jenis_kelamin;
+    public void setjenisKelamin(String jenisKelamin) {
+        jenisKelamin = jenisKelamin;
     }
 
     public String getNomorTlp() {

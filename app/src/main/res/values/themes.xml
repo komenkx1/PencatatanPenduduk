@@ -16,8 +16,13 @@
 
     <style name="ToolbarThemeOrange" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">#FFC107</item>
-        <item name="android:textColorPrimary">#FFC107</item>
+        <item name="android:textColorPrimary">#353532</item>
+        <item name="android:actionOverflowButtonStyle">@style/MyOverflowButtonStyle</item>
     </style>
 
+
+    <style name="MyOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">#171716</item>
+    </style>
 
 </resources>

@@ -1,7 +1,9 @@
 package com.example.pencatatanpenduduk;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -11,12 +13,15 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.pencatatanpenduduk.Helpers.DBHelper;
 
 import java.text.NumberFormat;
@@ -26,7 +31,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    TextView nama, alamat, tanggal_lahir, no_telp, gaji, agama, hobi, shortName, tglTercatat,jenisKelamin;
+    TextView nama, alamat, tanggalLahir, noTelp, gaji, agama, hobi, shortName, tglTercatat,jenisKelamin;
     private ImageView imageView;
     private long id;
     private  Bundle bundle;
@@ -46,12 +51,11 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(null);
 
-
         imageView = (ImageView) findViewById(R.id.profilePicture);
         nama = (TextView) findViewById(R.id.detailsNama);
         alamat = (TextView) findViewById(R.id.detailAlamat);
-        tanggal_lahir = (TextView) findViewById(R.id.detailsTglLahir);
-        no_telp = (TextView) findViewById(R.id.detailsNoTelp);
+        tanggalLahir = (TextView) findViewById(R.id.detailsTglLahir);
+        noTelp = (TextView) findViewById(R.id.detailsNoTelp);
         gaji = (TextView) findViewById(R.id.detailsGaji);
         agama = (TextView) findViewById(R.id.detailsAgama);
         hobi = (TextView) findViewById(R.id.detailsHobi);
@@ -64,23 +68,23 @@ public class ProfileActivity extends AppCompatActivity {
         //detail penduduk terbaru
         if (getIntent().getStringExtra("isNew") != null){
 
-        String [] namaDepan = getIntent().getStringExtra("name").split(" ");
+            String [] namaDepan = getIntent().getStringExtra("name").split(" ");
 
-        shortName.setText( namaDepan.length > 1 ? namaDepan[0]+" "+namaDepan[1] : namaDepan[0]);
-        nama.setText( getIntent().getStringExtra("name"));
-        alamat.setText(getIntent().getStringExtra("alamat"));
-        tanggal_lahir.setText(getIntent().getStringExtra("tanggal_lahir"));
-        no_telp.setText(getIntent().getStringExtra("nomor_telepon"));
-        gaji.setText(String.valueOf(formatRupiah.format((double) Integer.parseInt(getIntent().getStringExtra("gaji")))));
-        agama.setText(getIntent().getStringExtra("agama"));
-        hobi.setText(getIntent().getStringExtra("hobi"));
-        tglTercatat.setText("Tanggal Tercatat : "+ getIntent().getStringExtra("tanggal_tercatat"));
-        jenisKelamin.setText(getIntent().getStringExtra("jenisKelamin"));
+            shortName.setText( namaDepan.length > 1 ? namaDepan[0]+" "+namaDepan[1] : namaDepan[0]);
+            nama.setText( getIntent().getStringExtra("name"));
+            alamat.setText(getIntent().getStringExtra("alamat"));
+            tanggalLahir.setText(getIntent().getStringExtra("tanggalLahir"));
+            noTelp.setText(getIntent().getStringExtra("nomor_telepon"));
+            gaji.setText(String.valueOf(formatRupiah.format((double) Integer.parseInt(getIntent().getStringExtra("gaji")))));
+            agama.setText(getIntent().getStringExtra("agama"));
+            hobi.setText(getIntent().getStringExtra("hobi"));
+            tglTercatat.setText("Tanggal Tercatat : "+ getIntent().getStringExtra("tanggal_tercatat"));
+            jenisKelamin.setText(getIntent().getStringExtra("jenisKelamin"));
 
-        if (getIntent().getStringExtra("avatar") != null){
-            Uri avatarUri = Uri.parse(getIntent().getStringExtra("avatar"));
-            imageView.setImageURI(avatarUri);
-        }
+            if (getIntent().getStringExtra("avatar") != null){
+                Uri avatarUri = Uri.parse(getIntent().getStringExtra("avatar"));
+                imageView.setImageURI(avatarUri);
+            }
 
         }else{
             bundle = getIntent().getBundleExtra("userData");
@@ -115,14 +119,12 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-
     protected void openDialogInfo() {
         final Dialog dialog = new Dialog(ProfileActivity.this);
         dialog.setContentView(R.layout.info_layout_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setWindowAnimations(R.style.animationDialog);
         ImageView imageViewClose = dialog.findViewById(R.id.imageViewClose);
-
         TextView namaPendudukDialog = (TextView) dialog.findViewById(R.id.namaPenduduk);
         namaPendudukDialog.setText( "Penduduk dengan nama " + getIntent().getStringExtra("name") + " Berhasil di catat");
         dialog.show();
@@ -137,10 +139,22 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        MenuItem menuItem2 = menu.findItem(R.id.menu_two);
+        MenuItem menuItem3 = menu.findItem(R.id.menu_add);
+        menuItem2.setVisible(false);
+        menuItem3.setVisible(false);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItemId()){
             case android.R.id.home:
-                // todo: goto back activity from here
+//                todo: goto back activity from here
 
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -148,8 +162,16 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
                 return true;
 
-            default:
-                return super.onOptionsItemSelected(item);
+            case R.id.about:
+                new AlertDialog.Builder(this)
+                        .setTitle("About")
+                        .setMessage("Nama : I Komang Wahyu Hadi Permana \n"+"Nim : 1905551010 \n"+"Judul Aplikasi : Pencatatan Penduduk")
+                        .setPositiveButton("Tutup", null)
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
+
 }

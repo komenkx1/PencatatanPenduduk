@@ -87,7 +87,8 @@
                     android:hint="Masukkan Nama"
                     android:inputType="text"
                     android:padding="15dp"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "/>
 
                 <TextView
                     android:layout_width="wrap_content"

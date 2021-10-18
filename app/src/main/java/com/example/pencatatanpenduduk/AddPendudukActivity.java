@@ -1,13 +1,13 @@
 package com.example.pencatatanpenduduk;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -71,15 +72,14 @@ public class AddPendudukActivity extends AppCompatActivity implements SeekBar.On
     private Uri uri;
     private ArrayList<String> hobiResult;
     private String[] arrMonth = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
-    String umur;
-    DBHelper dbHelper;
-    long id;
+    private DBHelper dbHelper;
+    private long id;
     private int year, month, day;
-    Bundle bundle;
-    SimpleDateFormat dateFormat;
+    private Bundle bundle;
+    private SimpleDateFormat dateFormat;
     private Calendar cal;
-    Locale localeID = new Locale("in", "ID");
-    NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+    private Locale localeID = new Locale("in", "ID");
+    private NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,9 +120,9 @@ public class AddPendudukActivity extends AppCompatActivity implements SeekBar.On
 
         //get date now
         cal = Calendar.getInstance();
-         year = cal.get(Calendar.YEAR);
-         month = cal.get(Calendar.MONTH);
-         day = cal.get(Calendar.DAY_OF_MONTH);
+        year = cal.get(Calendar.YEAR);
+        month = cal.get(Calendar.MONTH);
+        day = cal.get(Calendar.DAY_OF_MONTH);
 
         //ketika form digunakan sebagai form edit
         if (getIntent().getBundleExtra("userData") != null){
@@ -223,12 +223,23 @@ public class AddPendudukActivity extends AppCompatActivity implements SeekBar.On
         Toast.makeText(this, "Anda Keluar Dari Halaman Create", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        MenuItem menuItem2 = menu.findItem(R.id.menu_two);
+        MenuItem menuItem3 = menu.findItem(R.id.menu_add);
+        menuItem2.setVisible(false);
+        menuItem3.setVisible(false);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItemId()){
             case android.R.id.home:
-                // todo: goto back activity from here
+//                todo: goto back activity from here
 
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -236,9 +247,16 @@ public class AddPendudukActivity extends AppCompatActivity implements SeekBar.On
                 finish();
                 return true;
 
-            default:
-                return super.onOptionsItemSelected(item);
+            case R.id.about:
+                new AlertDialog.Builder(this)
+                        .setTitle("About")
+                        .setMessage("Nama : I Komang Wahyu Hadi Permana \n"+"Nim : 1905551010 \n"+"Judul Aplikasi : Pencatatan Penduduk")
+                        .setPositiveButton("Tutup", null)
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -438,7 +456,6 @@ public class AddPendudukActivity extends AppCompatActivity implements SeekBar.On
             if (getIntent().getBundleExtra("userData") == null)
             {
                 dbHelper.insertData(values);
-                Toast.makeText(AddPendudukActivity.this, "Data Berhasil Di simpan", Toast.LENGTH_SHORT).show();
 
             }else{
                 dbHelper.updateData(values,id);

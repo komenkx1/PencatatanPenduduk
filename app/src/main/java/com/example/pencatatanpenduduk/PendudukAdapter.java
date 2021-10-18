@@ -31,12 +31,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHolder> {
 
-    ArrayList<Penduduk> penduduks;
-
-
-    DBHelper dbHelper;
+    private ArrayList<Penduduk> penduduks;
+    private DBHelper dbHelper;
     private Context context;
-    Bundle bundle = new Bundle();
+    private Bundle bundle = new Bundle();
 
     PendudukAdapter(ArrayList<Penduduk> penduduks ) {
 
@@ -44,13 +42,10 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
 
     }
 
-
-
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
-
         TextView nama_lengkap, alamat, tanggal_lahir;
         CircleImageView profileImage;
-        LinearLayout item;
+        CardView item;
 
 
         ViewHolder(View v) {
@@ -84,8 +79,8 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull PendudukAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.nama_lengkap.setText(penduduks.get(position).getNama_lengkap());
-        holder.tanggal_lahir.setText(penduduks.get(position).getTanggal_lahir());
+        holder.nama_lengkap.setText(penduduks.get(position).getnamaLengkap());
+        holder.tanggal_lahir.setText(penduduks.get(position).gettanggalLahir());
         holder.alamat.setText(penduduks.get(position).getAlamat().length() > 27 ? penduduks.get(position).getAlamat().substring(0,27) + "...." : penduduks.get(position).getAlamat() );
         if (penduduks.get(position).getFoto() != null){
             Uri uri = Uri.parse(penduduks.get(position).getFoto());
@@ -125,10 +120,10 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
     {
 
         bundle.putInt("id",penduduks.get(position).get_id());
-        bundle.putString("name",penduduks.get(position).getNama_lengkap());
+        bundle.putString("name",penduduks.get(position).getnamaLengkap());
         bundle.putString("alamat",penduduks.get(position).getAlamat());
-        bundle.putString("tanggal_lahir",penduduks.get(position).getTanggal_lahir());
-        bundle.putString("jk",penduduks.get(position).getJenis_kelamin());
+        bundle.putString("tanggal_lahir",penduduks.get(position).gettanggalLahir());
+        bundle.putString("jk",penduduks.get(position).getjenisKelamin());
         bundle.putString("nomor_telepon",penduduks.get(position).getNomorTlp());
         bundle.putString("gaji",penduduks.get(position).getGaji());
         bundle.putString("agama",penduduks.get(position).getAgama());
@@ -136,7 +131,7 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
         String [] hobis = penduduks.get(position).getHobi().split(",");
         bundle.putStringArray("hobi",hobis);
         bundle.putString("editMode","Edit");
-        bundle.putString("jenisKelamin",penduduks.get(position).getJenis_kelamin());
+        bundle.putString("jenisKelamin",penduduks.get(position).getjenisKelamin());
 
         if (penduduks.get(position).getFoto() != null){
             bundle.putString("avatar",penduduks.get(position).getFoto());
@@ -151,7 +146,6 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
         penduduks = filtered;
         notifyDataSetChanged();
     }
-
 
 }
 

@@ -77,7 +77,18 @@
             android:layout_height="match_parent"
             android:layout_marginTop="?android:attr/actionBarSize"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tidak Ada Data Ditemukan"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:id="@+id/searchNoData"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_black"
+                android:textSize="20dp"
+                android:visibility="invisible"
+                />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listPenduduk"
                 android:layout_width="match_parent"
