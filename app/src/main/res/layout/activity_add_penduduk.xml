@@ -249,28 +249,32 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Hindu" />
+                        android:text="Hindu"
+                        android:textSize="12sp"/>
 
                     <RadioButton
                         android:id="@+id/radio2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Islam" />
+                        android:text="Islam"
+                        android:textSize="12sp"/>
 
                     <RadioButton
                         android:id="@+id/radio3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Kristen" />
+                        android:text="Kristen"
+                        android:textSize="12sp"/>
 
                     <RadioButton
                         android:id="@+id/radio4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Budha" />
+                        android:text="Budha"
+                        android:textSize="12sp"/>
                 </RadioGroup>
 
                 <TextView
@@ -298,7 +302,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="0dp"
                         android:layout_weight="1"
-                        android:text="Berenang" />
+                        android:text="Berenang"
+                        android:textSize="12sp"/>
 
                     <CheckBox
                         android:id="@+id/tiduran"
@@ -306,7 +311,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="0dp"
                         android:layout_weight="1"
-                        android:text="Tiduran" />
+                        android:text="Tiduran"
+                        android:textSize="12sp"/>
 
                     <CheckBox
                         android:id="@+id/rebahan"
@@ -314,7 +320,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="0dp"
                         android:layout_weight="1"
-                        android:text="Rebahan" />
+                        android:text="Rebahan"
+                        android:textSize="12sp"/>
 
                     <CheckBox
                         android:id="@+id/gaming"
@@ -322,7 +329,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="0dp"
                         android:layout_weight="1"
-                        android:text="Gaming" />
+                        android:text="Gaming"
+                        android:textSize="12sp"/>
                 </LinearLayout>
 
 

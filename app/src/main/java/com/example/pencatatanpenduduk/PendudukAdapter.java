@@ -37,8 +37,9 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
     private Bundle bundle = new Bundle();
 
     PendudukAdapter(ArrayList<Penduduk> penduduks ) {
-
+//        this.penduduks.clear();
         this.penduduks = penduduks;
+        notifyDataSetChanged();
 
     }
 

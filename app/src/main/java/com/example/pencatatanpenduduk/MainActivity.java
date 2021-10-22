@@ -25,7 +25,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,8 +48,11 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Penduduk> penduduks;
     private ArrayList<Penduduk> penduduksCopy;
     private EditText search;
-    private TextView searchNoDatas;
+    private TextView searchNoDatas,noDataText1,noDataText2;
+    private RelativeLayout emptyLayout;
     private boolean isSearch = false;
+    private ImageView noDataVector;
+    private RecyclerView.AdapterDataObserver dataObserver;
 
 
     @Override
@@ -62,9 +67,21 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(recylerViewLayoutManager);
         penduduks = new ArrayList<Penduduk>();
         searchNoDatas = findViewById(R.id.searchNoData);
+        noDataText1 = findViewById(R.id.noDataText1);
+        noDataText2 = findViewById(R.id.noDataText2);
         penduduksCopy = new ArrayList<>(penduduks);
-
+        noDataVector = findViewById(R.id.vectorNoData);
+        emptyLayout = (RelativeLayout) findViewById(R.id.emptyLayout);
         search = findViewById(R.id.searchEditText);
+
+        //cek  data  menggunakan data observer
+        dataObserver = new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                checkisEmpty();
+            }
+        };
 
         //get all data sqlite
         Cursor cursor = new DBHelper(this).allData();
@@ -78,8 +95,12 @@ public class MainActivity extends AppCompatActivity {
             penduduks.add(obj);
         }
 
+
         pendudukAdapter = new PendudukAdapter(penduduks);
+        pendudukAdapter.registerAdapterDataObserver(dataObserver);
         recyclerView.setAdapter(pendudukAdapter);
+        checkisEmpty();
+
 
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -120,6 +141,17 @@ public class MainActivity extends AppCompatActivity {
         pendudukAdapter.notifyDataSetChanged();
     }
 
+    private  void checkisEmpty()
+    {
+        if (penduduks.isEmpty()){
+            recyclerView.setVisibility(View.GONE);
+            emptyLayout.setVisibility(View.VISIBLE);
+        }else{
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyLayout.setVisibility(View.GONE);
+        }
+    }
+
     //clearfocus Edittext on touch outside
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -140,10 +172,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //    @Override
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        pendudukAdapter.unregisterAdapterDataObserver(dataObserver);
+    }
+
+//    @Override
 //    protected void onPause() {
 //        super.onPause();
-//        Toast.makeText(this, "app Terpause", Toast.LENGTH_SHORT).show();
+//        pendudukAdapter.unregisterAdapterDataObserver(dataObserver);
 //    }
 //
 //    @Override
@@ -171,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                         .setTitle("About")
                         .setMessage("Nama : I Komang Wahyu Hadi Permana \n"+"Nim : 1905551010 \n"+"Judul Aplikasi : Pencatatan Penduduk")
                         .setPositiveButton("Tutup", null)
-                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setIcon(R.drawable.ic_baseline_info_24  )
                         .show();
                 break;
         }
@@ -195,11 +233,14 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 pendudukAdapter.removeItem(item.getGroupId());
+                                pendudukAdapter.notifyDataSetChanged();
+                                recyclerView.setAdapter(pendudukAdapter);
                                 Toast.makeText(MainActivity.this, "Data Dihapus", Toast.LENGTH_SHORT).show();
-                                if (isSearch){
-                                    overridePendingTransition( 0, 0);
+
+                                if (isSearch) {
+                                    overridePendingTransition(0, 0);
                                     MainActivity.this.recreate();
-                                    overridePendingTransition( 0, 0);
+                                    overridePendingTransition(0, 0);
                                 }
                             }
                         })
@@ -215,4 +256,5 @@ public class MainActivity extends AppCompatActivity {
         return super.onContextItemSelected(item);
 
     }
+
 }

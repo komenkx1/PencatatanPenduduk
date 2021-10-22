@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/semster_5/PencatatanPenduduk/app/src/main/res/drawable/ic_baseline_attach_file_24.xml" value="0.21875" />
+        <entry key="..\:/semster_5/PencatatanPenduduk/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.18827361563517916" />
         <entry key="..\:/semster_5/PencatatanPenduduk/app/src/main/res/drawable/ic_baseline_my_location_24.xml" value="0.37864583333333335" />
         <entry key="..\:/semster_5/PencatatanPenduduk/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.37864583333333335" />
         <entry key="..\:/semster_5/PencatatanPenduduk/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.21875" />
@@ -19,7 +20,7 @@
         <entry key="..\:/semster_5/PencatatanPenduduk/app/src/main/res/drawable/toolbar_background.xml" value="0.37864583333333335" />
         <entry key="..\:/semster_5/PencatatanPenduduk/app/src/main/res/font/font.xml" value="0.2328125" />
         <entry key="..\:/semster_5/PencatatanPenduduk/app/src/main/res/layout/activity_add_penduduk.xml" value="0.2" />
-        <entry key="..\:/semster_5/PencatatanPenduduk/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/semster_5/PencatatanPenduduk/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/semster_5/PencatatanPenduduk/app/src/main/res/layout/activity_profile.xml" value="0.22" />
         <entry key="..\:/semster_5/PencatatanPenduduk/app/src/main/res/layout/activity_splash_screen.xml" value="0.1868421052631579" />
         <entry key="..\:/semster_5/PencatatanPenduduk/app/src/main/res/layout/info_layout_dialog.xml" value="0.25" />

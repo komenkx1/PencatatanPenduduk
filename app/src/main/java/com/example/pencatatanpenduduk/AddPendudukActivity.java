@@ -250,7 +250,7 @@ public class AddPendudukActivity extends AppCompatActivity implements SeekBar.On
                         .setTitle("About")
                         .setMessage("Nama : I Komang Wahyu Hadi Permana \n"+"Nim : 1905551010 \n"+"Judul Aplikasi : Pencatatan Penduduk")
                         .setPositiveButton("Tutup", null)
-                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setIcon(R.drawable.ic_baseline_info_24)
                         .show();
                 break;
         }
