@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.MenuItemCompat;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PendudukAdapter pendudukAdapter;
     private RecyclerView.LayoutManager recylerViewLayoutManager;
-    private ArrayList<Penduduk> penduduks;
+    private ArrayList<Penduduk> penduduks, newPenduduk;
     private ArrayList<Penduduk> penduduksCopy;
     private EditText search;
     private TextView searchNoDatas,noDataText1,noDataText2;
@@ -80,11 +82,13 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged() {
                 super.onChanged();
                 checkisEmpty();
+//                pendudukAdapter.notifyDataSetChanged();
             }
         };
 
-        //get all data sqlite
+        // get all data sqlite
         Cursor cursor = new DBHelper(this).allData();
+
         while (cursor.moveToNext()){
             Penduduk obj = new Penduduk(cursor.getInt(0),
                     cursor.getString(1), cursor.getString(2),
@@ -124,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
     //search filter
     private  void filter(String newText){
         newText =   newText.toLowerCase();
-        ArrayList<Penduduk> newPenduduk = new ArrayList<>();
+        newPenduduk = new ArrayList<>();
 
         for (Penduduk penduduk : penduduks){
             String name = penduduk.getnamaLengkap().toLowerCase();

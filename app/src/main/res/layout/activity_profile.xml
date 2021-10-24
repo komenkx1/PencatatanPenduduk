@@ -140,6 +140,7 @@
                         android:orientation="vertical"
                         android:paddingHorizontal="15dp">
 
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -163,7 +164,7 @@
                             android:textSize="16sp"
                             android:fontFamily="@font/poppins_medium"
                             android:text="Alamat Lengkap"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="5dp"
                             android:textColor="@color/black" />
 
                         <TextView
@@ -181,7 +182,7 @@
                             android:textSize="16sp"
                             android:fontFamily="@font/poppins_medium"
                             android:text="Tanggal lahir"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="5dp"
                             android:textColor="@color/black" />
 
                         <TextView
@@ -198,7 +199,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
                             android:fontFamily="@font/poppins_medium"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="5dp"
                             android:text="Nomor Telepon"
                             android:textColor="@color/black" />
 
@@ -217,7 +218,7 @@
                             android:textSize="16sp"
                             android:fontFamily="@font/poppins_medium"
                             android:text="Gaji Perbulan (Estimasi)"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="5dp"
                             android:textColor="@color/black" />
 
                         <TextView
@@ -234,7 +235,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_medium"
                             android:text="Jenis Kelamin"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="5dp"
                             android:textColor="@color/black" />
 
                         <TextView
@@ -252,7 +253,7 @@
                             android:textSize="16sp"
                             android:fontFamily="@font/poppins_medium"
                             android:text="Agama"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="5dp"
                             android:textColor="@color/black" />
 
                         <TextView
@@ -269,7 +270,7 @@
                             android:textSize="16sp"
                             android:fontFamily="@font/poppins_medium"
                             android:text="Hobi"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="5dp"
                             android:textColor="@color/black" />
 
                         <TextView

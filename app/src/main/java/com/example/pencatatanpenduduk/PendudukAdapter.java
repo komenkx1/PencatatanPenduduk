@@ -35,6 +35,7 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
     private DBHelper dbHelper;
     private Context context;
     private Bundle bundle = new Bundle();
+    private boolean isRemove;
 
     PendudukAdapter(ArrayList<Penduduk> penduduks ) {
 //        this.penduduks.clear();
@@ -109,6 +110,7 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
 
     public void removeItem(int position)
     {
+        isRemove = true;
         dbHelper = new DBHelper(context);
         dbHelper.deleteData(penduduks.get(position).get_id());
         penduduks.remove(position);
@@ -144,7 +146,14 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
     }
 
     public  void filteredList(ArrayList<Penduduk> filtered){
-        penduduks = filtered;
+        ArrayList pendudukCopy = new ArrayList<Penduduk>();
+        for (Penduduk item : filtered)
+        {
+            pendudukCopy.add(item);
+        }
+        filtered.clear();
+
+        penduduks = pendudukCopy;
         notifyDataSetChanged();
     }
 
