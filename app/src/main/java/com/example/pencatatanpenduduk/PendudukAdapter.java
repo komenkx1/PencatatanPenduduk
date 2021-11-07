@@ -87,6 +87,9 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
         if (penduduks.get(position).getFoto() != null){
             Uri uri = Uri.parse(penduduks.get(position).getFoto());
             holder.profileImage.setImageURI(uri);
+        }else{
+            Uri imgUri=Uri.parse("android.resource://com.example.pencatatanpenduduk/"+R.drawable.ic_baseline_person_24);
+            holder.profileImage.setImageURI(imgUri);
         }
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
