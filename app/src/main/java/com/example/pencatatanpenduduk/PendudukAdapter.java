@@ -107,6 +107,7 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
         return penduduks.size();
 
     }
+    public void setList(ArrayList<Penduduk> list ) { this.penduduks = list; }
 
     public void removeItem(int position)
     {
@@ -146,16 +147,11 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
     }
 
     public  void filteredList(ArrayList<Penduduk> filtered){
-        ArrayList pendudukCopy = new ArrayList<Penduduk>();
-        for (Penduduk item : filtered)
-        {
-            pendudukCopy.add(item);
-        }
-        filtered.clear();
-
-        penduduks = pendudukCopy;
+        penduduks = filtered;
         notifyDataSetChanged();
     }
+
+
 
 }
 

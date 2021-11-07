@@ -3,6 +3,7 @@ package com.example.pencatatanpenduduk;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.MenuItemCompat;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -81,28 +83,35 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged() {
                 super.onChanged();
+                recyclerView.refreshDrawableState();
                 checkisEmpty();
 //                pendudukAdapter.notifyDataSetChanged();
             }
         };
 
-        // get all data sqlite
-        Cursor cursor = new DBHelper(this).allData();
-
-        while (cursor.moveToNext()){
-            Penduduk obj = new Penduduk(cursor.getInt(0),
-                    cursor.getString(1), cursor.getString(2),
-                    cursor.getString(3), cursor.getString(4),
-                    cursor.getString(5), cursor.getString(6),
-                    cursor.getString(7), cursor.getString(8),
-                    cursor.getString(9), cursor.getString(10));
-            penduduks.add(obj);
-        }
-
-
         pendudukAdapter = new PendudukAdapter(penduduks);
         pendudukAdapter.registerAdapterDataObserver(dataObserver);
         recyclerView.setAdapter(pendudukAdapter);
+
+        search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    searchNoDatas.setVisibility(View.INVISIBLE);
+
+                } else {
+                    if (!isSearch){
+                        searchNoDatas.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+        // get all data sqlite
+        fetchDataFromSqliteDatabase();
+        pendudukAdapter.notifyDataSetChanged();
+
+
+
         checkisEmpty();
 
 
@@ -187,12 +196,13 @@ public class MainActivity extends AppCompatActivity {
 //        super.onPause();
 //        pendudukAdapter.unregisterAdapterDataObserver(dataObserver);
 //    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        Toast.makeText(this, "app Ter-resume", Toast.LENGTH_SHORT).show();
-//    }
+////
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchDataFromSqliteDatabase();
+        pendudukAdapter.notifyDataSetChanged();
+    }
 
     //floating menu
     @Override
@@ -237,15 +247,10 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 pendudukAdapter.removeItem(item.getGroupId());
-                                pendudukAdapter.notifyDataSetChanged();
-                                recyclerView.setAdapter(pendudukAdapter);
+                                recyclerView.refreshDrawableState();
+                                    fetchDataFromSqliteDatabase();
+                                    pendudukAdapter.notifyDataSetChanged();
                                 Toast.makeText(MainActivity.this, "Data Dihapus", Toast.LENGTH_SHORT).show();
-
-                                if (isSearch) {
-                                    overridePendingTransition(0, 0);
-                                    MainActivity.this.recreate();
-                                    overridePendingTransition(0, 0);
-                                }
                             }
                         })
                         .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
@@ -260,5 +265,23 @@ public class MainActivity extends AppCompatActivity {
         return super.onContextItemSelected(item);
 
     }
+
+    public void fetchDataFromSqliteDatabase() {
+        penduduks.clear();
+        Cursor cursor = new DBHelper(this).allData();
+
+        while (cursor.moveToNext()){
+            Penduduk obj = new Penduduk(cursor.getInt(0),
+                    cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3), cursor.getString(4),
+                    cursor.getString(5), cursor.getString(6),
+                    cursor.getString(7), cursor.getString(8),
+                    cursor.getString(9), cursor.getString(10));
+            penduduks.add(obj);
+        }
+        pendudukAdapter.setList(penduduks);
+    }
+
+
 
 }

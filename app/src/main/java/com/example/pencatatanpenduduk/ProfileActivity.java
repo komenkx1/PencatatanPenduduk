@@ -2,6 +2,7 @@ package com.example.pencatatanpenduduk;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
@@ -42,6 +43,8 @@ public class ProfileActivity extends AppCompatActivity {
     @SuppressLint("Range")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         super.onCreate(savedInstanceState);
         dbHelper = new DBHelper(this);
 
