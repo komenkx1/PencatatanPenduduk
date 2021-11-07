@@ -93,19 +93,7 @@ public class MainActivity extends AppCompatActivity {
         pendudukAdapter.registerAdapterDataObserver(dataObserver);
         recyclerView.setAdapter(pendudukAdapter);
 
-        search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    searchNoDatas.setVisibility(View.INVISIBLE);
 
-                } else {
-                    if (!isSearch){
-                        searchNoDatas.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
-        });
         // get all data sqlite
         fetchDataFromSqliteDatabase();
         pendudukAdapter.notifyDataSetChanged();
@@ -146,6 +134,15 @@ public class MainActivity extends AppCompatActivity {
                 isSearch = true;
             }else{
                 isSearch = false;
+                search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+                            searchNoDatas.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
+
                 searchNoDatas.setVisibility(View.VISIBLE);
             }
         }
