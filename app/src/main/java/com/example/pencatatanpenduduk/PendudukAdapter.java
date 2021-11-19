@@ -58,7 +58,7 @@ public class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.ViewHo
 
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.setHeaderTitle("Menu Option:");
+            contextMenu.setHeaderTitle(R.string.label_contextMenu);
             contextMenu.add(getAdapterPosition(),101,0,"Edit");
             contextMenu.add(getAdapterPosition(),102,0,"Hapus");
         }

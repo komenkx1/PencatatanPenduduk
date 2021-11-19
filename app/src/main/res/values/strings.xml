@@ -6,6 +6,7 @@
     <string name="label_noTelp">Nomor Telepon <font color='#FF0000'>*</font></string>
     <string name="label_agama">Agama <font color='#FF0000'>*</font></string>
     <string name="label_jk">Jenis Kelamin <font color='#FF0000'>*</font></string>
+    <string name="label_contextMenu"><b>Menu Option : </b></string>
 
     <string-array name="jenis_kelamin">
         <item>Pria</item>
